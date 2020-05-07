@@ -1,0 +1,19 @@
+.header-container{
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-menu{
+  width: 180px;
+  display: flex;
+  justify-content: space-between;
+}
+.header-menu__item{  
+  list-style: none;
+}
+.header-menu__link{
+  text-decoration: none;
+  color: var(--text-general);
+}
