@@ -1,0 +1,111 @@
+<% if @my_book.nil? %>
+  ERROR 404: BOOK NOT FOUND
+<% else %>
+  <div class="edit-book">
+    <div class="edit-book--left">
+      <img class="book-cover" src="<%= @my_book.cover %>" alt="<%= @my_book.title %>">
+    </div>
+
+    <div class="edit-book--right">
+      <h2 class="book-title"><%= @my_book.title %></h2>
+      <span class="by">by <%= @my_book.authors.join(', ') %></span>
+      <form method="post">
+        <label>
+          READING STATUS
+          <select name="book_state">
+            <option value="0">Want to Read</option>
+            <option value="1">Reading</option>
+            <option value="2">Read</option>
+          </select>
+        </label>
+        <label>
+          Notes
+          <textarea name="notes"><%= @my_book.notes %></textarea>
+        </label>
+        <div class="textarea-button"><input type="submit" class="save" value="Save"></div>
+      </form>
+    </div>
+  </div>
+<% end %>
+
+<style>
+
+  .book-title {
+    font-size: 20px;
+    line-height: 27px;
+    color: #1A202C;
+  }
+
+  .by {
+    font-size: 16px;
+    line-height: 22px;
+    color: #4A5568;
+  }
+
+  .edit-book {
+    display: flex;
+    width: 460px;
+  }
+
+  .edit-book--left img {
+    height: 230px;
+    width: 153px;
+  }
+
+  .edit-book--right {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 12px;
+    color: #4A5568;
+  }
+
+  label > * {
+    display: block;
+  }
+
+  textarea {
+    font-size: 16px;
+    line-height: 22px;
+    height: 144px;
+    width: 455px;
+    color: #1A202C;
+    background-color: #FFFFFF;
+    border: 1px solid #718096;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+    padding: 10px;
+  }
+
+  .save {
+    background-color: #9AE6B4;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    color: #1A202C;
+    padding: 8px 14px;
+    border: none;
+  }
+
+  select {
+    font-size: 16px;
+    line-height: 22px;
+    color: #1A202C;
+    background-color: #EDF2F7;
+    border: none;
+  }
+
+  .textarea-button {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+  }
+</style>
