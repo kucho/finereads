@@ -51,3 +51,11 @@ post '/books/:book_uid' do
   end
   redirect "/books/#{book_uid}"
 end
+
+get '/show/:book_uid' do
+  book_uid = params[:book_uid]
+  @sample_book = APIBook.all.find { |el| el.uid == book_uid }
+  erb :book_detail
+
+  #p @sample_book.description
+end
