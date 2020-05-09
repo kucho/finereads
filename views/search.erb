@@ -15,8 +15,10 @@
 </form>
 
 <% if @input.nil? %>
-  <img src="/book.png" alt="book">
-  <p>Waiting for a query</p>
+  <div class="waiting">
+    <img src="/book.png" alt="book">
+    <p>Waiting for a query</p>
+  </div>
 <% else %>
   <div class="results">
     <% @api_books.each do |book| %>
@@ -27,6 +29,20 @@
 
 
 <style>
+
+  .waiting{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  .waiting p{
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 27px;
+  }
 
   .search_form {
     display: flex;

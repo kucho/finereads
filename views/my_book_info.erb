@@ -13,15 +13,16 @@
         <label>
           READING STATUS
           <select name="book_state">
-            <option value="0">Want to Read</option>
-            <option value="1">Reading</option>
-            <option value="2">Read</option>
+            <option value="0" <%= @my_book.state == '0'? 'selected' : nil %>>Want to Read</option>
+            <option value="1" <%= @my_book.state == '1'? 'selected' : nil %>>Reading</option>
+            <option value="2" <%= @my_book.state == '2'? 'selected' : nil %>>Read</option>
           </select>
         </label>
         <label>
           Notes
           <textarea name="notes"><%= @my_book.notes %></textarea>
         </label>
+        <input type="hidden" name="_method" value="PATCH">
         <div class="textarea-button"><input type="submit" class="save" value="Save"></div>
       </form>
     </div>

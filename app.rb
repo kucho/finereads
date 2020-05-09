@@ -11,6 +11,8 @@ require_relative 'helpers/book_helper'
 
 helpers BookHelper
 
+use Rack::MethodOverride
+
 get '/' do
   erb :index
 end
@@ -30,44 +32,45 @@ get '/search' do
   erb :search
 end
 
-get '/books/:book_uid?' do
-  book_uid = params[:book_uid]
-  @my_book = Book.all.find { |el| el.uid == book_uid }
-  erb :books
-end
-
-post '/books/:book_uid' do
-  book_uid = params[:book_uid]
-  book_state = params['book_state']
-
-  my_book = Book.find { |el| el.uid == book_uid }
-  if my_book.nil?
-    selected = APIBook.find { |book| book.uid == book_uid }
-    Book.create(selected, book_state)
-  else
-    my_book.update_notes!(params['notes'])
-    my_book.update_state!(book_state)
-  end
-  redirect "/books/#{book_uid}"
-end
-
-get '/show/:book_uid' do
+get '/books/:book_uid' do
   book_uid = params[:book_uid]
   @sample_book = APIBook.all.find { |el| el.uid == book_uid }
   erb :book_detail
-
-  #p @sample_book.description
 end
 
-get '/my_books' do
-  @my_books = Book.all
-  erb :my_books
+get '/my_books/:book_uid?' do
+  book_uid = params[:book_uid]
+
+  if book_uid.nil?
+    @my_books = Book.all
+    erb :my_books
+  else
+    @my_book = Book.all.find { |el| el.uid == book_uid }
+    erb :my_book_info
+  end
 end
 
-post '/my_books' do
-  book_uid = params['uid']
+post '/my_books/:book_uid' do
+  book_uid = params[:book_uid]
+  book_state = params['book_state']
+  selected = APIBook.find { |book| book.uid == book_uid }
+  Book.create(selected, book_state)
+  redirect '/my_books/'
+end
+
+patch '/my_books/:book_uid' do
+  book_uid = params[:book_uid]
+  book_state = params['book_state']
+  my_book = Book.find { |el| el.uid == book_uid }
+  my_book.update_notes!(params['notes'])
+  my_book.update_state!(book_state)
+  redirect '/my_books/'
+end
+
+delete '/my_books/:book_uid' do
+  book_uid = params['book_uid']
   print(book_uid)
-  target = Book.find{|element| element.uid == book_uid}.id
+  target = Book.find { |element| element.uid == book_uid }.id
   Book.delete(target)
-  redirect '/my_books'
+  redirect '/my_books/'
 end

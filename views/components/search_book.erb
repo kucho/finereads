@@ -1,18 +1,17 @@
 <div class="book">
-  <!-- TODO: Image sends to the description -->
-  <a href="/show/<%= book.uid %>" method="post">
+  <a href="/books/<%= book.uid %>">
     <img src="<%= book.thumbnail %>" alt="<%= book.title %>">
   </a>
   <% present = Book.find { |my_book| my_book.uid == book.uid }
      if present.nil? %>
-    <form class="book_search--actions" action="/books/<%= book.uid %>" method="post">
+    <form class="book_search--actions" action="/my_books/<%= book.uid %>" method="post">
       <button class="primary_button" id="want" name='book_state' type="submit" value="0">Want to Read</button>
       <button class="book_link" id="read" name='book_state' type="submit" value="2">Mark as read</button>
     </form>
   <% else %>
     <div class="added">
       <p><strong>Added on:</strong> <%= present.date.strftime("%m/%d/%Y") %></p>
-      <p><a class="book_link" href="/books/<%= present.uid %>">Edit notes</a></p>
+      <p><a class="book_link" href="/my_books/<%= present.uid %>">Edit notes</a></p>
     </div>
   <% end %>
 </div>

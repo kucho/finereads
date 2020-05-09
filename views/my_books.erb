@@ -1,83 +1,92 @@
 <% if @my_books.nil? %>
   ERROR 404: BOOK NOT FOUND
 <% else %>
-    <table>
-        <tr>
-            <th>Cover</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Status</th>
-            <th>Date added</th>
-            <th></th>
-        </tr>
-        <% @my_books.each do |book| %>
-            <tr>
-                <td>
-                    <img src="<%= book.cover %>" alt="<%= book.title %>">
-                </td>
-                <td>
-                    <p class = "title"><%=book.title%></p>
-                </td>
-                <td>
-                    <p class = "text"><%=book.authors.join(', ')%></p>
-                </td>
-                <td>
-                    <p class = "text"><%=book.state == '1' ? 'Want to Read' : book.state == '2' ? 'Read' : 'Reading'%></p>
-                </td>
-                <td>
-                    <p class = "text"><%=book.date.strftime("%Y-%m-%d")%></p>
-                </td>
-                <td>
-                    <form method="post">
-                        <input name="uid" value="<%=book.uid%>" type="hidden">
-                        <input name="_method" type="image" value="delete" src="/trash.png">
-                    </form>
-                </td>
-            </tr>
-        <% end %>
-    </table>
+  <table>
+    <tr>
+      <th>Cover</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Status</th>
+      <th>Date added</th>
+      <th></th>
+    </tr>
+    <% @my_books.each do |book| %>
+      <tr>
+        <td>
+          <img class="cover" src="<%= book.cover %>" alt="<%= book.title %>">
+        </td>
+        <td>
+          <p class="title" style="width: 120px"><%= book.title %></p>
+        </td>
+        <td>
+          <p class="text"><%= book.authors.join(', ') %></p>
+        </td>
+        <td>
+          <p class="text"><%= if book.state == '0'
+                                'Want to Read'
+                              else
+                                book.state == '1' ? 'Reading' : 'Read'
+                              end %></p>
+        </td>
+        <td>
+          <p class="text"><%= book.date.strftime("%Y-%m-%d") %></p>
+        </td>
+        <td>
+          <div class="book_actions">
+            <a href="/my_books/<%= book.uid %>"><img src="/edit.png" alt="edit"></a>
+            <form method="post" action="/my_books/<%= book.uid %>">
+              <input name="_method" type="hidden" value="DELETE">
+              <button type="submit"><img src="/trash.png" alt="delete"></button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 <% end %>
 
 <style>
-.uid {
-    display: none;
-}
 
-table {
-  border-collapse: collapse;
-  width: 620px;
-  margin: auto;
+  .book_actions{
+    display: flex;
+    justify-content: space-between;
+  }
 
-}
+  .book_actions button{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    margin: 0 10px;
+  }
 
-th, td {
-    
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 19px;
-}
-img {
-  height: 105px;
-  width: 75px;
-}
-.title{
-  color: #ED8936;
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 19px;
-}
-.text{
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 16px;
-}
+  table {
+    border-collapse: collapse;
+    width: 700px;
+    margin: auto;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  .cover {
+    height: 105px;
+    width: 75px;
+  }
+
+  .title {
+    color: #ED8936;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  .text {
+    font-size: 12px;
+    line-height: 16px;
+  }
 </style>
