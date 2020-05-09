@@ -20,8 +20,7 @@ get '/search' do
   uri = "https://www.googleapis.com/books/v1/volumes?q=#{@input}"
   res = {}
   unless @input.nil? || @input.empty?
-    req = HTTP.headers(accept: 'application/json').get(uri)
-    res = req.parse
+    res = HTTP.headers(accept: 'application/json').get(uri).parse
   end
 
   unless res.empty?

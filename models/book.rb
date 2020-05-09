@@ -2,7 +2,7 @@
 
 # Saved book
 class Book < LazyRecord
-  include Enumerable
+
   attr_reader :cover, :title, :authors, :date, :uid
   attr_accessor :notes, :state
 

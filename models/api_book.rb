@@ -2,20 +2,34 @@
 
 # A book from google's API
 class APIBook < LazyRecord
-  include Enumerable
+
   attr_reader :uid, :title, :authors,
               :description, :price,
               :buy_link, :thumbnail
 
-  def initialize(book_json) # rubocop:todo Metrics/AbcSize
-    @uid = book_json['id']
-    @title = book_json['volumeInfo']['title']
-    @authors = book_json['volumeInfo']['authors']
-    @description = book_json['volumeInfo']['description']
-    has_price = book_json['saleInfo']['listPrice']
-    @price = has_price.nil? ? 'Not available' : has_price['amount']
-    @buy_link = book_json['saleInfo']['buyLink']
-    has_images = book_json['volumeInfo']['imageLinks']
-    @thumbnail = has_images.nil? ? 'placeholder.png' : has_images['thumbnail']
+  def initialize(book_json)
+    @book_obj = book_json
+    @uid = @book_obj['id']
+    @title = @book_obj['volumeInfo']['title']
+    @authors = @book_obj['volumeInfo']['authors']
+    @description = fetch_description
+    @price = fetch_price
+    @buy_link = @book_obj['saleInfo']['buyLink']
+    @thumbnail = fetch_thumbnail
+  end
+
+  def fetch_description
+    req = HTTP.get(@book_obj['selfLink']).parse
+    req['volumeInfo']['description']
+  end
+
+  def fetch_price
+    has_price = @book_obj['saleInfo']['listPrice']
+    has_price.nil? ? 'Not available' : has_price['amount']
+  end
+
+  def fetch_thumbnail
+    has_images = @book_obj['volumeInfo']['imageLinks']
+    has_images.nil? ? 'placeholder.png' : has_images['thumbnail']
   end
 end
