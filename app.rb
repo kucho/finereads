@@ -21,14 +21,16 @@ get '/search' do
   input = params['p']
   res = {}
   uri = 'https://www.googleapis.com/books/v1/volumes'
-  unless input.nil? || input.empty?
+  unless input.nil? || input.empty? || input.match?(/^[\s]+$/)
     res = HTTP.headers(accept: 'application/json')
               .get(uri, params: { q: input }).parse
   end
 
-  @results = res['items'].map { |book| APIBook.new(book) } unless res.empty?
+  unless res.empty?
+    @results = res['items'].first(8).map { |book| APIBook.new(book) }
+  end
 
-  erb :search, locals: { waiting: input.nil? }
+  erb :search, locals: { waiting: res.empty? }
 end
 
 get '/books/:book_uid' do
