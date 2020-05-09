@@ -58,3 +58,16 @@ get '/show/:book_uid' do
 
   #p @sample_book.description
 end
+
+get '/my_books' do
+  @my_books = Book.all
+  erb :my_books
+end
+
+post '/my_books' do
+  book_uid = params['uid']
+  print(book_uid)
+  target = Book.find{|element| element.uid == book_uid}.id
+  Book.delete(target)
+  redirect '/my_books'
+end
