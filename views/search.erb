@@ -22,7 +22,9 @@
     <% @api_books.each do |book| %>
       <div class="book">
         <!-- TODO: Image sends to the description -->
-        <img src="<%= book.thumbnail %>" alt="<%= book.title %>">
+        <a href="/show/<%= book.uid %>" method="post">
+          <img src="<%= book.thumbnail %>" alt="<%= book.title %>">
+        </a>
         <% present = Book.find { |my_book| my_book.uid == book.uid }
            if present.nil? %>
           <form action="/books/<%= book.uid %>" method="post">
