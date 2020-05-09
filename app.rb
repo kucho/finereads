@@ -18,23 +18,22 @@ get '/' do
 end
 
 get '/search' do
-  @input = params['p']&.gsub(' ', '+')
-  uri = "https://www.googleapis.com/books/v1/volumes?q=#{@input}"
+  input = params['p']
   res = {}
-  unless @input.nil? || @input.empty?
-    res = HTTP.headers(accept: 'application/json').get(uri).parse
+  uri = 'https://www.googleapis.com/books/v1/volumes'
+  unless input.nil? || input.empty?
+    res = HTTP.headers(accept: 'application/json')
+              .get(uri, params: { q: input }).parse
   end
 
-  unless res.empty?
-    @api_books = res['items'].map { |book| APIBook.create(book) }
-  end
+  @results = res['items'].map { |book| APIBook.new(book) } unless res.empty?
 
-  erb :search
+  erb :search, locals: { waiting: input.nil? }
 end
 
 get '/books/:book_uid' do
   book_uid = params[:book_uid]
-  @sample_book = APIBook.all.find { |el| el.uid == book_uid }
+  @book = APIBook.new(fetch_book(book_uid))
   erb :book_detail
 end
 
@@ -53,8 +52,8 @@ end
 post '/my_books/:book_uid' do
   book_uid = params[:book_uid]
   book_state = params['book_state']
-  selected = APIBook.find { |book| book.uid == book_uid }
-  Book.create(selected, book_state)
+  target = APIBook.new(fetch_book(book_uid))
+  Book.create(target, book_state)
   redirect '/my_books/'
 end
 

@@ -15,11 +15,11 @@
         <td>
           <img class="cover" src="<%= book.cover %>" alt="<%= book.title %>">
         </td>
-        <td>
-          <p class="title" style="width: 120px"><%= book.title %></p>
+        <td style="color: #ED8936;">
+          <a href="/books/<%= book.uid %>" class="title" style="width: 120px"><%= book.title %></a>
         </td>
         <td>
-          <p class="text"><%= book.authors.join(', ') %></p>
+          <p class="text"><%= book.authors.join(', ') unless book.authors.nil? %></p>
         </td>
         <td>
           <p class="text"><%= if book.state == '0'
@@ -80,7 +80,7 @@
   }
 
   .title {
-    color: #ED8936;
+    display: block;
     font-size: 14px;
     line-height: 19px;
   }

@@ -14,21 +14,41 @@
   <input type="submit" class="submit_button yellow_bg" value="?">
 </form>
 
-<% if @input.nil? %>
+<% if waiting %>
   <div class="waiting">
     <img src="/book.png" alt="book">
     <p>Waiting for a query</p>
   </div>
 <% else %>
   <div class="results">
-    <% @api_books.each do |book| %>
-      <%= erb :'/components/search_book', locals: {book: book} %>
+    <% @results.each do |book| %>
+      <div class="book">
+        <a href="/books/<%= book.uid %>">
+          <img src="<%= book.thumbnail %>" alt="<%= book.title %>">
+        </a>
+        <% present = Book.find { |my_book| my_book.uid == book.uid }
+           if present.nil? %>
+          <form class="book_search--actions" action="/my_books/<%= book.uid %>" method="post">
+            <button class="primary_button" id="want" name='book_state' type="submit" value="0">Want to Read</button>
+            <button class="book_link" id="read" name='book_state' type="submit" value="2">Mark as read</button>
+          </form>
+        <% else %>
+          <div class="added">
+            <p><strong>Added on:</strong> <%= present.date.strftime("%m/%d/%Y") %></p>
+            <p><a class="book_link" href="/my_books/<%= present.uid %>">Edit notes</a></p>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 <% end %>
 
-
 <style>
+
+  .book_search--actions{
+    display: flex;
+    flex-direction: column;
+  }
 
   .waiting{
     display: flex;

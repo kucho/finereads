@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # A book from google's API
-class APIBook < LazyRecord
+class APIBook
 
   attr_reader :uid, :title, :authors,
               :description, :price,
@@ -13,9 +13,9 @@ class APIBook < LazyRecord
     @title = @book_obj['volumeInfo']['title']
     @authors = @book_obj['volumeInfo']['authors']
     @description = fetch_description
-    @price = fetch_price
+    @price = check_price
     @buy_link = @book_obj['saleInfo']['buyLink']
-    @thumbnail = fetch_thumbnail
+    @thumbnail = check_thumbnail
   end
 
   def fetch_description
@@ -23,12 +23,12 @@ class APIBook < LazyRecord
     req['volumeInfo']['description']
   end
 
-  def fetch_price
+  def check_price
     has_price = @book_obj['saleInfo']['listPrice']
     has_price.nil? ? 'Not available' : has_price['amount']
   end
 
-  def fetch_thumbnail
+  def check_thumbnail
     has_images = @book_obj['volumeInfo']['imageLinks']
     has_images.nil? ? 'placeholder.png' : has_images['thumbnail']
   end

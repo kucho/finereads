@@ -1,29 +1,29 @@
-<% if @sample_book.nil? %> ERROR 404: BOOK NOT FOUND <% else %>
+<% if @book.nil? %> ERROR 404: BOOK NOT FOUND <% else %>
 <div class="edit-book">
   <div class="edit-book--left">
     <img
       class="book-cover"
-      src="<%= @sample_book.thumbnail %>"
-      alt="<%= @sample_book.title %>"
+      src="<%= @book.thumbnail %>"
+      alt="<%= @book.title %>"
     />
   </div>
 
   <div class="edit-book--right">
-    <h2 class="book-title"><%= @sample_book.title %></h2>
+    <h2 class="book-title"><%= @book.title %></h2>
     <span class="by">
-      by <%= @sample_book.authors.join(', ') unless @sample_book.authors.nil?%>
+      by <%= @book.authors.join(', ') unless @book.authors.nil?%>
     </span>
-    <% unless @sample_book.description.nil? %>
-    <p class="book-description">"<%= @sample_book.description %>"</p>
+    <% unless @book.description.nil? %>
+    <p class="book-description">"<%= @book.description %>"</p>
     <% end %>
-    <% if @sample_book.price == "Not available"%>
+    <% if @book.price == "Not available"%>
     <p class="book-purchase-button">Not available to buy</p>
     <% else %>
     <a
       class="book-purchase-button"
-      href="https://play.google.com/store/books/details?id=<%= @sample_book.uid %>&rdid=book-<%= @sample_book.uid %>"
+      href="https://play.google.com/store/books/details?id=<%= @book.uid %>&rdid=book-<%= @book.uid %>"
     >
-      Buy for <%= @sample_book.price %>
+      Buy for <%= @book.price %>
       <img src="/purchase-cart.svg" alt="buy" />
     </a>
     <% end %>
