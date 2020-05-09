@@ -1,6 +1,9 @@
 <% if @my_books.nil? %>
   ERROR 404: BOOK NOT FOUND
 <% else %>
+    <div class = "top-title">
+       <p class= "main-title">My books</p>
+    </div>
     <table>
         <tr>
             <th>Cover</th>
@@ -22,13 +25,15 @@
                     <p class = "text"><%=book.authors.join(', ')%></p>
                 </td>
                 <td>
-                    <p class = "text"><%=book.state == '1' ? 'Want to Read' : book.state == '2' ? 'Read' : 'Reading'%></p>
+                    <p class = "text"><%=book.state == '0' ? 'Want to Read' : book.state == '1' ? 'Reading' : 'Read'%></p>
                 </td>
                 <td>
                     <p class = "text"><%=book.date.strftime("%Y-%m-%d")%></p>
                 </td>
                 <td>
                     <form method="post">
+                        <input name="uid" value="<%=book.uid%>" type="hidden">
+                        <a href="/books/<%=book.uid%>"><img src="/edit.png"></a>
                         <input name="uid" value="<%=book.uid%>" type="hidden">
                         <input name="_method" type="image" value="delete" src="/trash.png">
                     </form>
@@ -39,15 +44,19 @@
 <% end %>
 
 <style>
+a > img {
+    height: auto;
+    width: auto;
+}
+
 .uid {
     display: none;
 }
 
 table {
   border-collapse: collapse;
-  width: 620px;
+  width: 621px;
   margin: auto;
-
 }
 
 th, td {
@@ -79,5 +88,21 @@ img {
   font-weight: normal;
   font-size: 12px;
   line-height: 16px;
+}
+.main-title{
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 49px;
+  text-align: left;
+  
+}
+.top-title{
+    position: relative;
+    left: calc(-621px / 2);
+    transform: translate(50%, 0);
+    padding-top:72px;
+    padding-bottom: 25px;
 }
 </style>

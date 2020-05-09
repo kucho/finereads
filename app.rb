@@ -12,7 +12,7 @@ require_relative 'helpers/book_helper'
 helpers BookHelper
 
 get '/' do
-  erb :index
+  erb :index, :layout => false
 end
 
 get '/search' do
@@ -63,4 +63,8 @@ post '/my_books' do
   target = Book.find{|element| element.uid == book_uid}.id
   Book.delete(target)
   redirect '/my_books'
+end
+
+get '/index' do 
+   redirect '/search'
 end

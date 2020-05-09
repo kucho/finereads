@@ -8,7 +8,43 @@
 </head>
 <body>
 <header>
-  # Pendiente
+  <div class=navbar>
+     <a href = "/"><img class = "navbar-finereads" src= "/finereads.svg" alt = "Finereads"></a>
+     <div class = "content">
+        <a href = "/my_books"><p>My books</p></a>
+        <a href = "/search"><p>Find Books</p></a>
+     </div>
+  </div>
+  <style>
+  .navbar-finereads{
+    height: 40px;
+    width: 141px;
+}
+
+  .content{
+    display: flex;
+    flex-direction : row;
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    
+  }
+  .content > a{
+    padding-left:20px;
+  }
+  .navbar {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 1024px;
+    padding-top:13px;
+    margin: auto;
+    
+  }
+
+  </style>
 </header>
 <div class="app">
   <%= yield %>

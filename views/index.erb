@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Finereads</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;400&display=swap" rel="stylesheet">
+  <style>
+  body,html {
+      box-sizing: border-box;
+      margin:0;
+      padding:0;
+      background-color: #FFFAF0;
+      font-family: 'Nunito', sans-serif;
+
+
+  }
+  body{
+     display: grid;
+     grid-template-columns: 50% 50%;
+  }
+  img{
+      
+      width: 690px;
+      max-height: 1024px;
+      height:100vh;
+
+  }
+  .image{
+      grid-area: 1 / 1 /2 / 2 ;
+      
+  }
+  .content{
+      grid-area: 1 / 2 /2 / 3 ;
+      
+  }
+  p{
+        font-family: Roboto Slab;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 28px;
+        line-height: 37px; 
+  }
+  #id{
+      margin-top:0;
+  }
+  span{
+        font-family: Roboto Slab;
+        font-style: normal;
+        font-weight: 100;
+        font-size: 28px;
+        line-height: 37px;
+        
+  }
+  .submit_get{
+        width: 119px;
+        height: 41px;
+        background: #F6AD55;
+        border: 0;
+        cursor: pointer;
+        font-family: Nunito;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+
+  }
+  .content{
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content:center;
+  }
+
+  </style>
+</head>
+<body>
+<div class = "image">
+<img src="/reads.png" alt="Finereads">
+</div>
+<div class = "content">
+     <p> MEET <span>Fine</span>reads</p>
+     <p id = "id">Your new personal Library</p>
+     <form action="/index" method="get">
+       <input type="submit" class="submit_get" value="Get Started">
+     </form>
+</div>
+</body>
+</html>
