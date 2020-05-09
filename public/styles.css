@@ -9,18 +9,20 @@ a, a:visited {
     text-decoration: none;
 }
 
+html{
+    height: 100%;
+}
+
 body{
     background-color: #FFFAF0;
     font-family: 'Nunito', sans-serif;
+    height: 100%;
 }
 
 .app {
     display: flex;
+    height: 100%;
     flex-flow: column;
-    justify-content: center;
-    justify-items: center;
     align-content: center;
     align-items: center;
-    width: 70%;
-    margin: 0 auto;
 }

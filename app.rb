@@ -14,7 +14,7 @@ helpers BookHelper
 use Rack::MethodOverride
 
 get '/' do
-  erb :index, :layout => false
+  erb :index
 end
 
 get '/search' do
