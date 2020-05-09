@@ -6,6 +6,7 @@
   <link href="/styles.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
   <style>
     .navbar-finereads{
       height: 40px;
@@ -53,7 +54,7 @@
 </div>
 <% unless request.path_info == '/' %>
 <footer>
-  # Pendiente
+  <%= erb :'/components/footer' %>
 </footer>
 <% end %>
 </body>
